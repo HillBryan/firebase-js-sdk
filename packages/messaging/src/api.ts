@@ -120,7 +120,7 @@ export async function getToken(
  * the {@link Messaging} instance from the push subscription.
  *
  * @param messaging - The {@link Messaging} instance.
- * @param options - Provides an optional vapid key and an optional service worker registration.
+ * @param options - Provides an optional service worker registration.
  *
  * @returns The promise resolves when the token has been successfully deleted.
  *
