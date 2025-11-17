@@ -36,7 +36,7 @@ describe('deleteToken', () => {
   beforeEach(() => {
     messaging = getFakeMessagingService();
     fakeServiceWorkerRegistration = new FakeServiceWorkerRegistration();
-    (globalThis as any).ServiceWorkerRegistration = FakeServiceWorkerRegistration;
+    stub(globalThis as any, 'ServiceWorkerRegistration').value(FakeServiceWorkerRegistration);
 
     deleteTokenInternalStub = stub(tokenManagerModule, 'deleteTokenInternal').resolves(true);
     registerDefaultSwStub = stub(registerModule, 'registerDefaultSw').callsFake(
@@ -44,6 +44,10 @@ describe('deleteToken', () => {
         msg.swRegistration = fakeServiceWorkerRegistration;
       }
     );
+  });
+
+  afterEach(() => {
+    restore();
   });
 
   it('If navigator is missing, an error is thrown', async () => {
@@ -55,8 +59,6 @@ describe('deleteToken', () => {
 
     expect(registerDefaultSwStub).not.to.have.been.called;
     expect(deleteTokenInternalStub).not.to.have.been.called;
-
-    restore();
   });
 
   it('If no options are present, the default service should be registered', async () => {
