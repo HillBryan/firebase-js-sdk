@@ -27,18 +27,24 @@ import { FakeServiceWorkerRegistration } from '../testing/fakes/service-worker';
 import { Stub } from '../testing/sinon-types';
 
 describe('deleteToken', () => {
-
   let messaging: ReturnType<typeof getFakeMessagingService>;
   let fakeServiceWorkerRegistration: FakeServiceWorkerRegistration;
-  let deleteTokenInternalStub: Stub<(typeof tokenManagerModule)['deleteTokenInternal']>;
+  let deleteTokenInternalStub: Stub<
+    (typeof tokenManagerModule)['deleteTokenInternal']
+  >;
   let registerDefaultSwStub: Stub<(typeof registerModule)['registerDefaultSw']>;
 
   beforeEach(() => {
     messaging = getFakeMessagingService();
     fakeServiceWorkerRegistration = new FakeServiceWorkerRegistration();
-    stub(globalThis as any, 'ServiceWorkerRegistration').value(FakeServiceWorkerRegistration);
+    stub(globalThis as any, 'ServiceWorkerRegistration').value(
+      FakeServiceWorkerRegistration
+    );
 
-    deleteTokenInternalStub = stub(tokenManagerModule, 'deleteTokenInternal').resolves(true);
+    deleteTokenInternalStub = stub(
+      tokenManagerModule,
+      'deleteTokenInternal'
+    ).resolves(true);
     registerDefaultSwStub = stub(registerModule, 'registerDefaultSw').callsFake(
       async (msg: typeof messaging) => {
         msg.swRegistration = fakeServiceWorkerRegistration;
@@ -82,7 +88,9 @@ describe('deleteToken', () => {
 
   it('If given service worker is not a true service worker, an error should be thrown', async () => {
     await expect(
-      deleteToken(messaging, { serviceWorkerRegistration: ({} as unknown) as ServiceWorkerRegistration })
+      deleteToken(messaging, {
+        serviceWorkerRegistration: {} as unknown as ServiceWorkerRegistration
+      })
     ).to.be.rejectedWith('messaging/invalid-sw-registration');
 
     expect(messaging.swRegistration).to.equal(undefined);
@@ -97,7 +105,9 @@ describe('deleteToken', () => {
 
     await deleteToken(messaging, options);
 
-    expect(messaging.swRegistration).to.equal(options.serviceWorkerRegistration);
+    expect(messaging.swRegistration).to.equal(
+      options.serviceWorkerRegistration
+    );
     expect(registerDefaultSwStub).not.to.have.been.called;
     expect(deleteTokenInternalStub).to.have.been.calledOnceWith(messaging);
   });

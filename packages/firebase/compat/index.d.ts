@@ -7464,9 +7464,17 @@ declare namespace firebase.messaging {
      * Deletes the registration token associated with this messaging instance and unsubscribes the
      * messaging instance from the push subscription.
      *
+     * @param options.serviceWorkerRegistration The service worker registration for receiving push
+     * messaging. If the registration is not provided explicitly, you need to have a
+     * `firebase-messaging-sw.js` at your root location. See
+     * {@link https://firebase.google.com/docs/cloud-messaging/js/client#access_the_registration_token | Access the registration token}
+     * for more details.
+     *
      * @return The promise resolves when the token has been successfully deleted.
      */
-    deleteToken(): Promise<boolean>;
+    deleteToken(options?: {
+      serviceWorkerRegistration?: ServiceWorkerRegistration;
+    }): Promise<boolean>;
 
     /**
      * Subscribes the messaging instance to push notifications. Returns an FCM registration token

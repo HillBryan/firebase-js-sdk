@@ -126,7 +126,10 @@ export async function getToken(
  *
  * @public
  */
-export function deleteToken(messaging: Messaging, options?: DeleteTokenOptions): Promise<boolean> {
+export function deleteToken(
+  messaging: Messaging,
+  options?: DeleteTokenOptions
+): Promise<boolean> {
   messaging = getModularInstance(messaging);
   return _deleteToken(messaging as MessagingService, options);
 }

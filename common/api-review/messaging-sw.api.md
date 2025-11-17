@@ -9,6 +9,11 @@ import { NextFn } from '@firebase/util';
 import { Observer } from '@firebase/util';
 import { Unsubscribe } from '@firebase/util';
 
+// @public (undocumented)
+export interface DeleteTokenOptions {
+    serviceWorkerRegistration?: ServiceWorkerRegistration;
+}
+
 // @public
 export function experimentalSetDeliveryMetricsExportedToBigQueryEnabled(messaging: Messaging, enable: boolean): void;
 
