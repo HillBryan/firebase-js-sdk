@@ -19,18 +19,18 @@ import { ERROR_FACTORY, ErrorCode } from '../util/errors';
 
 import { MessagingService } from '../messaging-service';
 import { deleteTokenInternal } from '../internals/token-manager';
-import { registerDefaultSw } from '../helpers/registerDefaultSw';
+import { DeleteTokenOptions } from '../interfaces/public-types';
+import { updateSwReg } from '../helpers/updateSwReg';
 
 export async function deleteToken(
-  messaging: MessagingService
+  messaging: MessagingService,
+  options?: DeleteTokenOptions
 ): Promise<boolean> {
   if (!navigator) {
     throw ERROR_FACTORY.create(ErrorCode.AVAILABLE_IN_WINDOW);
   }
 
-  if (!messaging.swRegistration) {
-    await registerDefaultSw(messaging);
-  }
+  await updateSwReg(messaging, options?.serviceWorkerRegistration);
 
   return deleteTokenInternal(messaging);
 }

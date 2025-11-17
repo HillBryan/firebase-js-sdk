@@ -10,7 +10,12 @@ import { Observer } from '@firebase/util';
 import { Unsubscribe } from '@firebase/util';
 
 // @public
-export function deleteToken(messaging: Messaging): Promise<boolean>;
+export function deleteToken(messaging: Messaging, options?: DeleteTokenOptions): Promise<boolean>;
+
+// @public (undocumented)
+export interface DeleteTokenOptions {
+    serviceWorkerRegistration?: ServiceWorkerRegistration;
+}
 
 // @public
 export interface FcmOptions {

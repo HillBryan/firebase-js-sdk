@@ -18,6 +18,7 @@
 import { ERROR_FACTORY, ErrorCode } from './util/errors';
 import { FirebaseApp, _getProvider, getApp } from '@firebase/app';
 import {
+  DeleteTokenOptions,
   GetTokenOptions,
   MessagePayload,
   Messaging
@@ -119,14 +120,18 @@ export async function getToken(
  * the {@link Messaging} instance from the push subscription.
  *
  * @param messaging - The {@link Messaging} instance.
+ * @param options - Provides an optional service worker registration.
  *
  * @returns The promise resolves when the token has been successfully deleted.
  *
  * @public
  */
-export function deleteToken(messaging: Messaging): Promise<boolean> {
+export function deleteToken(
+  messaging: Messaging,
+  options?: DeleteTokenOptions
+): Promise<boolean> {
   messaging = getModularInstance(messaging);
-  return _deleteToken(messaging as MessagingService);
+  return _deleteToken(messaging as MessagingService, options);
 }
 
 /**

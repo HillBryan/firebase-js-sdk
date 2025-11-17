@@ -134,6 +134,17 @@ export interface GetTokenOptions {
   serviceWorkerRegistration?: ServiceWorkerRegistration;
 }
 
+export interface DeleteTokenOptions {
+  /**
+   * The service worker registration for receiving push
+   * messaging. If the registration is not provided explicitly, you need to have a
+   * `firebase-messaging-sw.js` at your root location. See
+   * {@link https://firebase.google.com/docs/cloud-messaging/js/client#access_the_registration_token | Access the registration token}
+   * for more details.
+   */
+  serviceWorkerRegistration?: ServiceWorkerRegistration;
+}
+
 /**
  * Public interface of the Firebase Cloud Messaging SDK.
  *
